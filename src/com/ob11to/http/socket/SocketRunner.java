@@ -12,14 +12,15 @@ public class SocketRunner {
 //        http - 80
 //        https - 443
 //        tcp
-        var inetAddresses = Inet4Address.getByName("google.com");  //создание IP
-        try (var socket = new Socket(inetAddresses, 80);  // сокет (IP address, порт)
+        var inetAddresses = Inet4Address.getByName("localhost");  //создание IP
+        try (var socket = new Socket(inetAddresses, 7777);  // сокет (IP address, порт)
             var outputStream = new DataOutputStream(socket.getOutputStream()); //создает поток ввода
             var inputStream = new DataInputStream(socket.getInputStream())) { //создает поток вывода
 
-            outputStream.writeUTF("Hello word"); //Записывает строку в базовый выходной поток
-            var response = inputStream.readAllBytes(); //Считывает все оставшиеся байты из входного потока.
-            System.out.println(response.length);
+            outputStream.writeUTF("Hello! I am Client"); //Записывает строку в базовый выходной поток
+           // var response = inputStream.readAllBytes(); //Считывает все оставшиеся байты из входного потока.
+            var readUTF = inputStream.readUTF();
+            System.out.println(readUTF);
 
         }
 
