@@ -7,9 +7,7 @@ import java.nio.file.Path;
 
 public class UrlExample {
     public static void main(String[] args) throws IOException {
-        //extracted(); fileResult();
-
-        savePhoto();
+        //extracted(); fileResult(); savePhoto();
     }
 
 
