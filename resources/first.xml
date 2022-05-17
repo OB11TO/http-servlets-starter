@@ -7,7 +7,7 @@
         <version>1.1</version>
     </start-row>
     <headers>
-        <heade name="accept" value="application/json"/>
+        <header name="accept" value="application/json"/>
         <header>
             <content-type>text/html</content-type>
         </header>
