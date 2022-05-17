@@ -3,24 +3,34 @@ package com.ob11to.http.server;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HttpServerRunner {
+    private final ExecutorService pool;
     private final int port;
+    private boolean flagStopped;
 
-    public HttpServerRunner(int port) {
+    public HttpServerRunner(int port, int poolSize) {
         this.port = port;
+        this.pool = Executors.newFixedThreadPool(poolSize);
     }
 
     public void run() {
         try {
             var server = new ServerSocket(port);
-            var socket = server.accept();
-            processSocket(socket);
+            while (!flagStopped) {
+                var socket = server.accept();
+                System.out.println("Socket accepted");
+                pool.submit(() -> processSocket(socket));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -29,8 +39,10 @@ public class HttpServerRunner {
     private void processSocket(Socket socket) {
         try (socket;
              var inputStream = new DataInputStream(socket.getInputStream());
-             var outputStream = socket.getOutputStream()) {
+             var outputStream = new DataOutputStream(socket.getOutputStream())) {
 
+
+            Thread.sleep(10000L);
 //            step 1: request
             System.out.println("Request: " + new String(inputStream.readNBytes(400))); // Считываем request от клиента и выводим
 
@@ -46,12 +58,15 @@ public class HttpServerRunner {
             outputStream.write(System.lineSeparator().getBytes());
             outputStream.write(body);
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             //TODO: 2/27/21 log error massage
             e.printStackTrace();
         }
 
     }
 
+    public void setStopped(boolean stopped){
+        this.flagStopped = stopped;
+    }
 
 }
