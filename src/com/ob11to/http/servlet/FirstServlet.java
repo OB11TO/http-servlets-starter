@@ -14,21 +14,33 @@ import java.io.IOException;
 public class FirstServlet extends HttpServlet {
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) throws ServletException { //глобальная переменая
         super.init(config);
     }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        try (var writer = resp.getWriter()) {
-            writer.write("<h1>Hello!!! I am OB11TO<h1/>");
+        //REQUEST
+       req.getHeaders("user-agent"); // откуда пришел запрос
+        var headerNames = req.getHeaderNames(); //итератор всех имен хедеров
+        while (headerNames.hasMoreElements()){
+            var header = headerNames.nextElement();
+            System.out.println(header);
+            System.out.println(req.getHeader(header));
+            System.out.println();
+        }
+        //RESPONSE
+        resp.setContentType("text/html; charset=UTF-8"); //тип отправления клиенту | добавили русификацию
+        resp.setHeader("token","123321"); // кастомный хедер
+        //resp.setCharacterEncoding(StandardCharsets.UTF_8.name());  можно передавать, чтобы не было проблем с русификацией
+        try (var writer = resp.getWriter()) { //поток вывода
+            writer.write("<h1>ПРИВЕТ<h1/>"); //отправка
         }
     }
 
     @Override
-    public void destroy() {
+    public void destroy() { // удалить сервлет из каталины
         super.destroy();
     }
 }
