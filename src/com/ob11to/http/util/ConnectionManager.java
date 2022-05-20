@@ -1,9 +1,8 @@
 package com.ob11to.http.util;
 
-import lombok.SneakyThrows;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public final class ConnectionManager {
 
@@ -14,12 +13,16 @@ public final class ConnectionManager {
     private ConnectionManager() {
     }
 
-    @SneakyThrows
     public static Connection get(){
-        return DriverManager.getConnection(
-                PropertiesUtil.get(URL_KEY),
-                PropertiesUtil.get(USER_KEY),
-                PropertiesUtil.get(PASSWORD_KEY)
-        );
+        try {
+            return DriverManager.getConnection(
+                    PropertiesUtil.get(URL_KEY),
+                    PropertiesUtil.get(USER_KEY),
+                    PropertiesUtil.get(PASSWORD_KEY)
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
     }
 }
