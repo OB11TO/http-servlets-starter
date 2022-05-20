@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Map;
-import java.util.stream.Stream;
 
 
 @WebServlet("/first")
@@ -33,8 +30,8 @@ public class FirstServlet extends HttpServlet {
             System.out.println(req.getHeader(header));
             System.out.println();
         }
-        var paramValue = req.getParameter("param");
-        var parameterMap = req.getParameterMap();
+        var paramValue = req.getParameter("param"); // принимаю параметр
+        var parameterMap = req.getParameterMap(); // принимаю список параметров
         System.out.println();
 
 
@@ -50,9 +47,11 @@ public class FirstServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var parameterMap = req.getParameterMap();
+        var entrySet = parameterMap.entrySet();
+        entrySet.forEach(System.out::println);
         System.out.println(parameterMap);
 
-        try (var reader = req.getReader(); //поток считывания, чтобы считать запрос
+        try (var reader = req.getReader(); //поток считывания, чтобы считать запрос body
             var lines = reader.lines()){ //стрим строк из потока, который считали
             lines.forEach(System.out::println);
         }
