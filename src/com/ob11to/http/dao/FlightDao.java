@@ -13,6 +13,9 @@ import java.util.Optional;
 
 public class FlightDao implements Dao<Integer, Flight> {
 
+    //сделал синглтон
+    private static final FlightDao FLIGHT_DAO_INSTANCE = new FlightDao();
+
     private static final String FIND_ALL = """
             SELECT id,
                     flight_no,
@@ -25,6 +28,12 @@ public class FlightDao implements Dao<Integer, Flight> {
             FROM flight_repository.task26.flight
             """;
 
+    private FlightDao() {
+    }
+
+    public static FlightDao getInstance(){
+        return FLIGHT_DAO_INSTANCE;
+    }
 
     @Override
     public List<Flight> findAll() {
@@ -60,6 +69,7 @@ public class FlightDao implements Dao<Integer, Flight> {
     public Flight save(Flight entity) {
         return null;
     }
+
 
     private Flight buildFlight(ResultSet resultSet) throws SQLException {
         return new  Flight(
