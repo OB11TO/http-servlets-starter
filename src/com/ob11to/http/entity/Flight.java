@@ -12,5 +12,6 @@ public class Flight {
     String departureAirportCode;
     LocalDateTime arrivalDate;
     String arrivalAirportCode;
+    Integer aircraftId;
     FlightStatus status;
 }
