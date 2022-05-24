@@ -13,15 +13,15 @@ public class SessionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
-        var session = req.getSession();
+        var session = req.getSession(); //получить сессию
         //System.out.println(session.isNew());
-        var attributeUser = (UserDto) session.getAttribute(USER);
-        if(attributeUser == null){
+        var attributeUser = (UserDto) session.getAttribute(USER); // получить атрибут
+        if(attributeUser == null){  //если атрибута нет, создать
             attributeUser = UserDto.builder()
                     .id(25L)
                     .mail("test@gmail.com")
                     .build();
-            session.setAttribute("user", attributeUser);
+            session.setAttribute("user", attributeUser); //
         }
     }
 }
