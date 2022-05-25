@@ -8,9 +8,10 @@
   To change this template use File | Settings | File Templates.
 
 
-  ЭТО ПЛОХОЙ ПРИМЕР, ТАК ДЕЛАТЬ НЕ НУЖНО. СКРИПЛЕТЫ ДАВНО УЖЕ НЕ ИСПОЛЬУЮТСЯ!!!!!
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>  <%--директива--%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Title</title>
@@ -18,15 +19,11 @@
 <body>
 <h1>Купленные билеты:</h1>
 <ul>
-    <%
-        Integer flightId = Integer.valueOf(request.getParameter("flightId"));
-        TicketService ticketService = TicketService.getInstance();
-        List<TicketDto> byIdFlightId = ticketService.findByIdFlightId(flightId);
-        for(TicketDto ticket : byIdFlightId){
-            out.write(String.format("<li>$s</li>", ticket.getSeatNo()));
-        }
-       
-    %>
+    <c:forEach var="ticket" items="${requestScope.tickets}">
+        <li>
+           ${fn:toLowerCase(ticket.seatNo)}
+        </li>
+    </c:forEach>
 </ul>
 </body>
 </html>

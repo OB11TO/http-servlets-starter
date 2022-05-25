@@ -1,6 +1,7 @@
 package com.ob11to.http.servlet;
 
 import com.ob11to.http.service.FlightService;
+import com.ob11to.http.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet("/flight")
 public class FlightServlet extends HttpServlet {
@@ -17,19 +17,24 @@ public class FlightServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        try (var printWriter = resp.getWriter()) {
-            printWriter.write("<h1>Список перелетов</h1>");
-            printWriter.write("<ul>");
-            flightService.findAll().forEach(flightDto -> {
-                printWriter.write("""
-                        <li>
-                           <a href="/tickets?flightId=%d"> %s </a>
-                        </li>
-                        """.formatted(flightDto.getId(),flightDto.getDescription()));
-            });
-            printWriter.write("</ul>");
-        }
+        var flightDtos = flightService.findAll();
+        req.setAttribute("flights", flightDtos);
+        req.getRequestDispatcher(JspHelper.getPath("flight"))
+                .forward(req,resp);
+
+        //        resp.setContentType("text/html");
+//        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//        try (var printWriter = resp.getWriter()) {
+//            printWriter.write("<h1>Список перелетов</h1>");
+//            printWriter.write("<ul>");
+//            flightService.findAll().forEach(flightDto -> {
+//                printWriter.write("""
+//                        <li>
+//                           <a href="/tickets?flightId=%d"> %s </a>
+//                        </li>
+//                        """.formatted(flightDto.getId(),flightDto.getDescription()));
+//            });
+//            printWriter.write("</ul>");
+//        }
     }
 }
