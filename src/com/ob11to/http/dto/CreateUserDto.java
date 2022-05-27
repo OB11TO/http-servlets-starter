@@ -1,5 +1,6 @@
 package com.ob11to.http.dto;
 
+import jakarta.servlet.http.Part;
 import lombok.Builder;
 import lombok.Value;
 
@@ -7,6 +8,7 @@ import lombok.Value;
 @Builder
 public class CreateUserDto {
     String name;
+    Part image;
     String birthday;
     String email;
     String password;

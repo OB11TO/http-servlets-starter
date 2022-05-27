@@ -12,9 +12,12 @@
     <title>registration</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" method="post" enctype="multipart/form-data">
     <label for="name"><br>Name:
         <input type="text" name="username" id="name">
+    </label>
+    <label><br>Image:
+        <input type="file" name="image" id="imageId">
     </label>
     <label><br>Birthday:
         <input type="date" name="birthday" id="date">

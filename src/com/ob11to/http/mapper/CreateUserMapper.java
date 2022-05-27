@@ -13,6 +13,7 @@ import static lombok.AccessLevel.PRIVATE;
 public class CreateUserMapper implements Mapper<CreateUserDto,User> {
 
     private static final CreateUserMapper CREATE_USER_MAPPER = new CreateUserMapper();
+    private static final String IMAGE_FOLDER = "user/";
 
 
     public static CreateUserMapper getInstance(){
@@ -24,6 +25,7 @@ public class CreateUserMapper implements Mapper<CreateUserDto,User> {
     public User mapFrom(CreateUserDto object) {
         return User.builder()
                 .name(object.getName())
+                .image(IMAGE_FOLDER + object.getImage().getSubmittedFileName())
                 .birthday(LocalDateFormatter.format(object.getBirthday()))
                 .email(object.getEmail())
                 .password(object.getPassword())

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Builder
 public class User {
     private Integer id;
+    private String image;
     private String name;
     private LocalDate birthday;
     private String email;

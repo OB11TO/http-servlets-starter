@@ -7,6 +7,7 @@ import com.ob11to.http.exception.ValidatorException;
 import com.ob11to.http.service.UserService;
 import com.ob11to.http.util.JspHelper;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+@MultipartConfig(fileSizeThreshold = 1024 *1024)
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
@@ -30,9 +32,11 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var name = req.getParameter("name");
+        var image = req.getPart("image");
 
         var userDto = CreateUserDto.builder()
                 .name(req.getParameter("username"))
+                .image(req.getPart("image"))
                 .birthday(req.getParameter("birthday"))
                 .email(req.getParameter("email"))
                 .password(req.getParameter("password"))
