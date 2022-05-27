@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImageService {
@@ -30,4 +31,11 @@ public class ImageService {
         }
     }
 
+    @SneakyThrows
+    public Optional<InputStream> get(String imagePath) {
+        var fullPath = Path.of(basePath, imagePath);
+        return Files.exists(fullPath) //если путь существует
+                ? Optional.of(Files.newInputStream(fullPath))
+                : Optional.empty();
+    }
 }
