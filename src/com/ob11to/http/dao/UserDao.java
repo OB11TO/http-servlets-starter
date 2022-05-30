@@ -1,10 +1,15 @@
 package com.ob11to.http.dao;
 
+import com.ob11to.http.entity.Gender;
+import com.ob11to.http.entity.Role;
 import com.ob11to.http.entity.User;
 import com.ob11to.http.util.ConnectionManager;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +26,12 @@ public class UserDao implements Dao<Integer, User> {
             (name, image, birthday, email, password, role, gender) VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
+    private static final String FIND_BY_EMAIL_TO_PASSWORD = """
+            SELECT *
+            FROM flight_repository.task26.users
+            WHERE email = ? AND password = ?
+            """;
+
     public static UserDao getInstance() {
         return USER_DAO_INSTANCE;
     }
@@ -29,6 +40,24 @@ public class UserDao implements Dao<Integer, User> {
     @Override
     public List<User> findAll() {
         return null;
+    }
+
+
+    @SneakyThrows
+    public Optional<User> findByEmailToPassword(String email, String password) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_EMAIL_TO_PASSWORD)) {
+
+            preparedStatement.setObject(1, email);
+            preparedStatement.setObject(2, password);
+
+            var resultSet = preparedStatement.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = buildEntity(resultSet);
+            }
+            return Optional.ofNullable(user);
+        }
     }
 
     @Override
@@ -66,5 +95,19 @@ public class UserDao implements Dao<Integer, User> {
             entity.setId(generatedKeys.getObject("id", Integer.class));
         }
         return entity;
+    }
+
+    private User buildEntity(ResultSet resultSet) throws SQLException {
+        return User.builder()
+                .id(resultSet.getObject("id", Integer.class))
+                .name(resultSet.getObject("name", String.class))
+                .image(resultSet.getObject("image", String.class))
+                .birthday(resultSet.getObject("birthday", Date.class).toLocalDate())
+                .email(resultSet.getObject("email", String.class))
+                .password(resultSet.getObject("password", String.class))
+                .role(Role.find(resultSet.getObject("role", String.class)).orElse(null))
+                .gender(Gender.valueOf(resultSet.getObject("gender", String.class)))
+                .build();
+
     }
 }

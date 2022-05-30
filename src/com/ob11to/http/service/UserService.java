@@ -3,11 +3,15 @@ package com.ob11to.http.service;
 
 import com.ob11to.http.dao.UserDao;
 import com.ob11to.http.dto.CreateUserDto;
+import com.ob11to.http.dto.UserDto;
 import com.ob11to.http.exception.ValidatorException;
 import com.ob11to.http.mapper.CreateUserMapper;
+import com.ob11to.http.mapper.UserMapper;
 import com.ob11to.http.validator.CreateUserValidator;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+
+import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -18,12 +22,20 @@ public class UserService {
     private final UserDao userDao = UserDao.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
     private final ImageService imageService = ImageService.getInstance();
+    private final UserMapper userMapper = UserMapper.getInstance();
+
 
     private static final UserService USER_SERVICE_INSTANCE = new UserService();
 
     public static UserService getInstance(){
         return USER_SERVICE_INSTANCE;
     }
+
+    public Optional<UserDto> login(String email, String password){
+        return userDao.findByEmailToPassword(email, password)
+                .map(userMapper::mapFrom);
+    }
+
 
     //вернет id
     @SneakyThrows

@@ -18,8 +18,8 @@ public class SessionServlet extends HttpServlet {
         var attributeUser = (UserDto) session.getAttribute(USER); // получить атрибут
         if(attributeUser == null){  //если атрибута нет, создать
             attributeUser = UserDto.builder()
-                    .id(25L)
-                    .mail("test@gmail.com")
+                    .id(25)
+                    .email("test@gmail.com")
                     .build();
             session.setAttribute("user", attributeUser); //
         }
