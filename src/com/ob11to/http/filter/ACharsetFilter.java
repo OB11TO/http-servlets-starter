@@ -1,17 +1,15 @@
 package com.ob11to.http.filter;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.annotation.WebInitParam;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebFilter(value = "/*",
-        initParams = {
-                @WebInitParam(name = "param1", value = "paramValue")
-        },
-        dispatcherTypes = DispatcherType.REQUEST)
+//@WebFilter(value = "/*",
+//        initParams = {
+//                @WebInitParam(name = "param1", value = "paramValue")
+//        },
+//        dispatcherTypes = DispatcherType.REQUEST)
 
 public class ACharsetFilter implements Filter {
 

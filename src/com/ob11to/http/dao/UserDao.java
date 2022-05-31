@@ -88,7 +88,7 @@ public class UserDao implements Dao<Integer, User> {
             preparedStatement.setObject(6, entity.getRole().name());
             preparedStatement.setObject(7, entity.getGender().name());
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
             var generatedKeys = preparedStatement.getGeneratedKeys();
             generatedKeys.next();

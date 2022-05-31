@@ -1,16 +1,11 @@
 package com.ob11to.http.filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.*;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class LoggingFilter implements Filter {
 
     @Override
