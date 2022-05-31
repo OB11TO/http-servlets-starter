@@ -1,12 +1,13 @@
 package com.ob11to.http.servlet;
 
 import com.ob11to.http.dto.UserDto;
+import com.ob11to.http.util.UrlPath;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/sessions")
+@WebServlet(UrlPath.SESSIONS)
 public class SessionServlet extends HttpServlet {
 
     private static final String USER = "user";

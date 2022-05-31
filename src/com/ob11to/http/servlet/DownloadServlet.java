@@ -1,5 +1,6 @@
 package com.ob11to.http.servlet;
 
+import com.ob11to.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-@WebServlet("/download")
+@WebServlet(UrlPath.DOWNLOAD)
 public class DownloadServlet extends HttpServlet {
 
     @Override

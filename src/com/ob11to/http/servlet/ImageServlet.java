@@ -1,6 +1,7 @@
 package com.ob11to.http.servlet;
 
 import com.ob11to.http.service.ImageService;
+import com.ob11to.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,7 +12,7 @@ import lombok.SneakyThrows;
 import java.io.IOException;
 import java.io.InputStream;
 
-@WebServlet("/image/*")
+@WebServlet(UrlPath.IMAGES + "/*")
 public class ImageServlet extends HttpServlet {
 
     private final ImageService imageService = ImageService.getInstance();
@@ -19,7 +20,7 @@ public class ImageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var requestURI = req.getRequestURI();
-        var imagePath = requestURI.replace("/image/", ""); // /user/baki.jpg
+        var imagePath = requestURI.replace(UrlPath.IMAGES, ""); // /user/baki.jpg
 
         imageService.get(imagePath) //получаем изображение по абсолютному адресу
                 .ifPresentOrElse(image -> {

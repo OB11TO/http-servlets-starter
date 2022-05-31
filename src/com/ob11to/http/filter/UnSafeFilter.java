@@ -1,6 +1,7 @@
 package com.ob11to.http.filter;
 
 import com.ob11to.http.dto.UserDto;
+import com.ob11to.http.util.UrlPath;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ public class UnSafeFilter implements Filter {
         if(user != null){
             filterChain.doFilter(servletRequest,servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect("/registration");
+            ((HttpServletResponse) servletResponse).sendRedirect(UrlPath.REGISTRATION);
         }
 
     }

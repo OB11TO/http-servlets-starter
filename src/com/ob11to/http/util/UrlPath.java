@@ -8,7 +8,7 @@ public class UrlPath {
     public static final String LOGIN = "/login";
     public static final String LOGOUT = "/logout";
     public static final String REGISTRATION = "/registration";
-    public static final String IMAGES = "/images";
+    public static final String IMAGES = "/image";
     public static final String TICKETS = "/tickets";
     public static final String SESSIONS = "/sessions";
     public static final String FLIGHTS = "/flights";

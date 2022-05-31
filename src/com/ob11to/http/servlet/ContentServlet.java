@@ -3,6 +3,7 @@ package com.ob11to.http.servlet;
 import com.ob11to.http.dto.FlightDto;
 import com.ob11to.http.service.FlightService;
 import com.ob11to.http.util.JspHelper;
+import com.ob11to.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@WebServlet("/content")
+@WebServlet(UrlPath.CONTENT)
 public class ContentServlet extends HttpServlet {
 
     private final FlightService flightService = FlightService.getInstance();

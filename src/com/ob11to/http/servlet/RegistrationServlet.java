@@ -6,6 +6,7 @@ import com.ob11to.http.entity.Role;
 import com.ob11to.http.exception.ValidatorException;
 import com.ob11to.http.service.UserService;
 import com.ob11to.http.util.JspHelper;
+import com.ob11to.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @MultipartConfig(fileSizeThreshold = 1024 *1024)
-@WebServlet("/registration")
+@WebServlet(value = UrlPath.REGISTRATION, name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
@@ -46,7 +47,7 @@ public class RegistrationServlet extends HttpServlet {
 
         try {
             userService.create(userDto);
-            resp.sendRedirect("/login");
+            resp.sendRedirect(UrlPath.LOGIN);
         }catch (ValidatorException exception){
             req.setAttribute("errors",exception.getErrors());
             doGet(req,resp);

@@ -13,11 +13,11 @@
 </head>
 <body>
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <label for="emailId">
-            <input type="text" name="email" id="emailId" value="${param.email}">
+        <label for="emailId">Email:
+            <input type="text" name="email" id="emailId" value="${param.email}" required>
         </label><br>
-        <label for="passwordId">
-            <input type="password" name="password" id="passwordId">
+        <label for="passwordId">Password:
+            <input type="password" name="password" id="passwordId" required>
         </label><br>
         <button type="submit">Login</button>
         <a href="${pageContext.request.contextPath}/registration">
